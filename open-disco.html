@@ -745,7 +745,61 @@ asciidoc.install(2);
 <div class="sect1">
 <h2 id="_summary">Summary</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>(tk)</p></div>
+<div class="paragraph"><p>This document details an <em>adhoc specification</em> called <strong>DISCO</strong> (Discovering Interoperative Services for Continuous Operation). DISCO is a simple language for managing the adding/removing of services as well as the ability to search ("find") and make connections with ("bind") registered services.</p></div>
+<div class="paragraph"><p>DISCO was designed to be easy, open, lightweight, and extensible. For this reason, readers/implementers may find things "missing" or "underspecified." This is intentional. Gettings started is meant to be easy. And location customizations is allowed when desired.</p></div>
+<div class="paragraph"><p>The DISCO "language" supports the following features:
+ * <code>register</code> : add a service to the shared registry
+ * <code>find</code> : query the registry for services (dependents) to consume
+ * <code>bind</code> : notify the registry the intention to connect with and use another service
+ * <code>renew</code> : renew a service&#8217;s registry <em>lease</em> to prove is is still up and running
+ * <code>unregister</code> : remove a service from the registry</p></div>
+<div class="paragraph"><p>Optionally, services can expose a <code>health-check</code> URL to allow registries to periodically check the status of a registered service.</p></div>
+<div class="paragraph"><p>Implementing a DISCO server is a simple as exposing URLs that support each of the above actions and supporting the defined input and output arguments in one or more identified media types.</p></div>
+<div class="paragraph"><p>Implementing support for DISCO in a service (or service proxy) can be accomplished by adding calls to a DISCO server to support the <code>register</code>, <code>unregister</code>, and <code>renew</code> or <code>health-check</code> methods. Optionally, services can add support for using the <code>find</code> and <code>bind</code> services if they wish to use the registry to locate other dependent services they consume.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_disco_design_goals">DISCO Design Goals</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Here are some key design goals of the DISCO specification:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+DISCO Should Be Easy
+</dt>
+<dd>
+<div class="ulist"><ul>
+<li>
+<p>
+The goal of DISCO is to make it safe/cheap/easy to create connections between APIs <em>at runtime</em>. Essentially, automating the process normally handled by humans (discovery at design/implementation time) and supported by CI/CD tools (resolution at build/deploy time).
+</p>
+</li>
+</ul></div>
+</dd>
+<dt class="hdlist1">
+DISCO is Open
+</dt>
+<dd>
+<p>
+DISCO was also created to foster an open approach to service discovery and management. For this reason, DISCO has been implemented to run over HTTP returning standardized message formats (HTML, JSON, etc.).
+</p>
+</dd>
+<dt class="hdlist1">
+DISCO is Lightweight
+</dt>
+<dd>
+<p>
+DISCO is not meant to create a close-loop, heavy-weight approach to managing services. It follows the same ethos as DNS, HTTP, etc. by doing only the minimum needed to accomplish a goal and to make no assumptions about the hardware, software, platform, or languages used to build and interact with DISCO servers.
+</p>
+</dd>
+<dt class="hdlist1">
+DISCO is Extensible
+</dt>
+<dd>
+<p>
+DISC was designed to be highly extensible. As long as implementers provide the required minimum service actions and support the defined semantic profile, they are free to add any number of optional features (as long as they don&#8217;t break the defined DISCO profile).
+</p>
+</dd>
+</dl></div>
 </div>
 </div>
 <div class="sect1">
@@ -776,7 +830,7 @@ asciidoc.install(2);
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-03 13:06:03 EST
+Last updated 2018-03-03 14:15:17 EST
 </div>
 </div>
 </body>
