@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="generator" content="AsciiDoc 8.6.9" />
-<title>Open Discovery (open-disco)</title>
+<title>Discovering Interoperative Services for Continuous Operation (DISCO)</title>
 <style type="text/css">
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
@@ -733,7 +733,7 @@ asciidoc.install(2);
 </head>
 <body class="article">
 <div id="header">
-<h1>Open Discovery (open-disco)</h1>
+<h1>Discovering Interoperative Services for Continuous Operation (DISCO)</h1>
 <span id="author">Mike Amundsen</span><br />
 <span id="email"><code>&lt;<a href="mailto:mca@mamund.com">mca@mamund.com</a>&gt;</code></span><br />
 <div id="toc">
@@ -743,19 +743,107 @@ asciidoc.install(2);
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_status">Status</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Status
+</dt>
+<dd>
+<p>
+  <strong><span class="white red-background">Working Draft</span></strong>&#8201;&#8212;&#8201;<em>Only experimental and &#8216;proof-of-concept&#8217; apps should be built on this unstable draft.</em>
+</p>
+</dd>
+</dl></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Repository
+</dt>
+<dd>
+<p>
+  <a href="https://github.com/rwmbook/registry-docs">https://github.com/rwmbook/registry-docs</a>
+</p>
+</dd>
+<dt class="hdlist1">
+Last Updated
+</dt>
+<dd>
+<p>
+  2018-03-03
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_summary">Summary</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>This document details an <em>adhoc specification</em> called <strong>DISCO</strong> (Discovering Interoperative Services for Continuous Operation). DISCO is a simple language for managing the adding/removing of services as well as the ability to search ("find") and make connections with ("bind") registered services.</p></div>
-<div class="paragraph"><p>DISCO was designed to be easy, open, lightweight, and extensible. For this reason, readers/implementers may find things "missing" or "underspecified." This is intentional. Gettings started is meant to be easy. And location customizations is allowed when desired.</p></div>
-<div class="paragraph"><p>The DISCO "language" supports the following features:
- * <code>register</code> : add a service to the shared registry
- * <code>find</code> : query the registry for services (dependents) to consume
- * <code>bind</code> : notify the registry the intention to connect with and use another service
- * <code>renew</code> : renew a service&#8217;s registry <em>lease</em> to prove is is still up and running
- * <code>unregister</code> : remove a service from the registry</p></div>
+<div class="paragraph"><p>This document details an <em>adhoc specification</em> called <strong>DISCO</strong> (<strong>D</strong>iscovering <strong>I</strong>nteroperative <strong>S</strong>ervices for <strong>C</strong>ontinuous <strong>O</strong>peration). DISCO is a simple language for managing the adding/removing of services as well as the ability to search ("find") and make connections with ("bind") registered services.</p></div>
+<div class="paragraph"><p>DISCO was designed to be easy, open, lightweight, and extensible. For this reason, readers/implementers may find things "missing" or "underspecified." This is intentional. Getting started is meant to be easy. And local customization is supported as needed. This allows the DISCO spec to safely grow and improve over time without breaking exsting implementations.</p></div>
+<div class="paragraph"><p>The DISCO "language" supports the following features:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>register</code> : add a service to the shared registry
+</p>
+</li>
+<li>
+<p>
+<code>find</code> : query the registry for services (dependents) to consume
+</p>
+</li>
+<li>
+<p>
+<code>bind</code> : notify the registry the intention to connect with and use another service
+</p>
+</li>
+<li>
+<p>
+<code>renew</code> : renew a service&#8217;s registry <em>lease</em> to prove is is still up and running
+</p>
+</li>
+<li>
+<p>
+<code>unregister</code> : remove a service from the registry
+</p>
+</li>
+</ul></div>
 <div class="paragraph"><p>Optionally, services can expose a <code>health-check</code> URL to allow registries to periodically check the status of a registered service.</p></div>
 <div class="paragraph"><p>Implementing a DISCO server is a simple as exposing URLs that support each of the above actions and supporting the defined input and output arguments in one or more identified media types.</p></div>
-<div class="paragraph"><p>Implementing support for DISCO in a service (or service proxy) can be accomplished by adding calls to a DISCO server to support the <code>register</code>, <code>unregister</code>, and <code>renew</code> or <code>health-check</code> methods. Optionally, services can add support for using the <code>find</code> and <code>bind</code> services if they wish to use the registry to locate other dependent services they consume.</p></div>
+<div class="paragraph"><p>Implementing support for DISCO in a service (or service proxy) can be accomplished by adding method to an individual service that handle the <code>register</code>, <code>unregister</code>, and <code>renew</code> or <code>health-check</code> actions. Optionally, services can add support for the <code>find</code> and <code>bind</code> acitons if they wish to use the registry to locate other dependent services they consume.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_disco_resources">DISCO Resources</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The following resources are available for those interested using, and contributing to, the DISCO specification:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/rwmbook/registry">DISCO Registry</a> (NodeJS)
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/mamund/2018-02-sacon-workshop/tree/master/examples">DISCO Examples</a> (NodeJS &amp; HTML)
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/rwmbook/registry-docs">DISCO Specification</a> (ASCIIDoc)
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>If you are working on a DISCO-related project and would like to have it listed here, add an issue in the DISCO Specification repo and we can update the doc.</p></div>
+</td>
+</tr></table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -764,16 +852,12 @@ asciidoc.install(2);
 <div class="paragraph"><p>Here are some key design goals of the DISCO specification:</p></div>
 <div class="dlist"><dl>
 <dt class="hdlist1">
-DISCO Should Be Easy
+DISCO is Easy
 </dt>
 <dd>
-<div class="ulist"><ul>
-<li>
 <p>
 The goal of DISCO is to make it safe/cheap/easy to create connections between APIs <em>at runtime</em>. Essentially, automating the process normally handled by humans (discovery at design/implementation time) and supported by CI/CD tools (resolution at build/deploy time).
 </p>
-</li>
-</ul></div>
 </dd>
 <dt class="hdlist1">
 DISCO is Open
@@ -796,41 +880,194 @@ DISCO is Extensible
 </dt>
 <dd>
 <p>
-DISC was designed to be highly extensible. As long as implementers provide the required minimum service actions and support the defined semantic profile, they are free to add any number of optional features (as long as they don&#8217;t break the defined DISCO profile).
+DISCO was designed to be highly extensible. As long as implementers provide the required minimum service actions and support the defined semantic profile, they are free to add any number of optional features (as long as they don&#8217;t break the defined DISCO profile).
+</p>
+</dd>
+<dt class="hdlist1">
+DISCO is for the Web
+</dt>
+<dd>
+<p>
+There are some very powerful targeted platforms for managing dynamic machine instances and clusters and they work especially well for &#8216;closed communities&#8217; such as enterprises and large companies. DISCO was not created to compete with them. DISCO was designed to offer similar methods on the Web itself.
+</p>
+</dd>
+<dt class="hdlist1">
+DISCO is for Services, Not Machines
+</dt>
+<dd>
+<p>
+The target audience of the DISCO standard is the API/service developer community, not the DevOps VM/machine-instance community. DISCO allows you to register a running service, find other registered services you want to interact with, and keep track of the health of services on the Web.
 </p>
 </dd>
 </dl></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_simple_example">Simple Example</h2>
+<h2 id="_service_side_implementation_for_nodejs">Service-Side Implementation for NodeJS</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>(tk)</p></div>
+<div class="paragraph"><p>As part of the DISCO release, a simple NodeJS module (<code>discovery.js</code>) is available. This module can be added to any existing NodeJS project and supports all the required and optional DISCO interactions.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>For more on the <code>discovery.js</code> module, see the <a href="https://github.com/mamund/2018-02-sacon-workshop/tree/master/examples">DISCO Examples</a> repo.</p></div>
+</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>After including the module in your NodeJS project (and the accompanying <code>discovery-settings.js</code> configuration file), you can add default support for DISCO by wrapping your NodeJS <code>httpServer</code> like this:</p></div>
+<div class="listingblock">
+<div class="title">Basic DISCO Support in NodeJS</div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// register this service w/ defaults</span></span>
+discovery<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">register</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">null</span></span><span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">function</span></span><span style="color: #990000">(</span>response<span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+
+  <span style="font-style: italic"><span style="color: #9A1900">// sample service discovery action</span></span>
+  discovery<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">find</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">null</span></span><span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">function</span></span><span style="color: #990000">(</span>data<span style="color: #990000">,</span> response<span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+
+    <span style="font-style: italic"><span style="color: #9A1900">// select endpoints from query</span></span>
+    <span style="font-weight: bold"><span style="color: #0000FF">if</span></span><span style="color: #990000">(</span>data<span style="color: #990000">.</span>success<span style="color: #990000">===</span><span style="font-weight: bold"><span style="color: #0000FF">true</span></span><span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+      <span style="font-style: italic"><span style="color: #9A1900">// launch http server</span></span>
+      http<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">createServer</span></span><span style="color: #990000">(</span>zipServer<span style="color: #990000">).</span><span style="font-weight: bold"><span style="color: #000000">listen</span></span><span style="color: #990000">(</span><span style="color: #993399">8080</span><span style="color: #990000">);</span>
+      console<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">info</span></span><span style="color: #990000">(</span><span style="color: #FF0000">'zip-server running on port 8080.'</span><span style="color: #990000">);</span>
+    <span style="color: #FF0000">}</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="color: #FF0000">{</span>
+      console<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">error</span></span><span style="color: #990000">(</span><span style="color: #FF0000">'unable to bind to dependent services'</span><span style="color: #990000">);</span>
+      process<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">kill</span></span><span style="color: #990000">(</span>process<span style="color: #990000">.</span>pid<span style="color: #990000">,</span> <span style="color: #FF0000">"SIGTERM"</span><span style="color: #990000">);</span>
+    <span style="color: #FF0000">}</span>
+  <span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">);</span></tt></pre></div></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_documentation">Documentation</h2>
+<h2 id="_the_disco_registry_specification">The DISCO Registry Specification</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>(tk)</p></div>
+<div class="paragraph"><p>The DISCO Registry Specification describes the actions (required and optional) as well as all the input and output parameters for each action. The prototype DISCO Registry is implemented over HTTP and generates both HTML and JSON responses.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>You can find the source code for the prototype DISCO Registry server in the <a href="https://github.com/rwmbook/registry">DISCO Registry</a> repo.</p></div>
+</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_disco_registry_service_sequence_diagram">DISCO Registry Service Sequence Diagram</h3>
+<div class="paragraph"><p>Below is a simple sequence diagram that shows how the DISCO server interacts with external services.</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.websequencediagrams.com/files/render?link=VAP2LhXDVStI3rJOL7ma" alt="https://www.websequencediagrams.com/files/render?link=VAP2LhXDVStI3rJOL7ma" />
 </div>
 </div>
-<div class="sect1">
-<h2 id="_other_considerations">Other Considerations</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>(tk)</p></div>
+</div>
+<div class="sect2">
+<h3 id="_disco_registry_service_basics">DISCO Registry Service Basics</h3>
+<div class="paragraph"><p>Below are a list of basic guidelines for implementing a DISCO Registry</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Standard Protocols and Formats
+</dt>
+<dd>
+<p>
+The DISCO Registry Service is an open specification based on Web standards. It SHOULD support network interactions over the HTTP protocol and MAY support other protocols. It SHOULD support both HTML and JSON message formats and MAY support other formats which should be negotiable at runtime.
+</p>
+</dd>
+<dt class="hdlist1">
+Security
+</dt>
+<dd>
+<p>
+DISCO Registries MAY require user-level security to be accessed (e.g. via the <code>WWW-Authentication</code> header over HTTP). DISCO Registries MAY implement authorization checks to restrict any user&#8217;s ability to view data or execute actions. The authentication and authorization details are not part of this specification and SHOULD be implemented using existing open standards and well-documented for each implementation.
+</p>
+</dd>
+<dt class="hdlist1">
+Extensions
+</dt>
+<dd>
+<p>
+DISCO Registries are free to implement additional extensions by adding new data fields and/or actions to the list of supported elements. However, these extensions MUST NOT remove or redfine any exsiting DISCO specifications. All extensions MUST be backward and forward compatible with the published DISCO specifications.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_disco_registry_service_actions">DISCO Registry Service Actions</h3>
+<div class="paragraph"><p>The DISCO Registry Service includes the following Actions:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong><code>register</code></strong>
+</dt>
+<dd>
+<p>
+The <code>register</code> action is used by a <em>service</em> to register with a DISCO <em>registry</em>. This SHOULD be iniated by the service at start up (or when it is deployed into production). The <code>register</code> action has two required data elements <code>serviceName</code> (e.g. "UserMangement") and <code>serviceURL</code> (e.g. <code>http://example.com/services/user-mgmt/</code>). The service MAY be able to pass additional parameters to the registry, but these MAY be ignored. The <code>register</code> action MUST return a <code>registryID</code>&#8201;&#8212;&#8201;a unqiue value&#8201;&#8212;&#8201;to the service for use in subsequent interactions.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong><code>unregister</code></strong>
+</dt>
+<dd>
+<p>
+The <code>unregister</code> action is used by a <em>service</em> to remove itself from the DISCO registry. This SHOULD be initiated whenever the service is stopped (either by controlled means, or a crash). The <em>service</em> MUST pass the <code>registryID</code> that is associated with the service to remove. The registry MAY require additional information in this request. Upon successfully &#8216;unregistering&#8217; the service, the registry server SHOULD respond with <code>200 OK</code>. The registry MAY return additional data but the service MAY ignore this information.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong><code>renew</code></strong>
+</dt>
+<dd>
+<p>
+The <code>renew</code> action is used by a <em>service</em> to &#8216;ping&#8217; the registry&#8201;&#8212;&#8201;a means of proving the service is still up and running. The <em>service</em> MUST pass the <code>registryID</code> that is associated with the serve entry to renew. The registry MAY require additional information with this request. Upon success, the registry SHOULD respond with <code>200 OK</code>. The registry MAY return additional data but the service MAY ignore it.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong><code>find</code></strong>
+</dt>
+<dd>
+<p>
+The <code>find</code> action is used by a <em>service</em> to query the registry for a list of service that match a search criteria. This is a way for services to "ask" a registry for a pointer to one or more services that can fulfill a need for that service (e.g. "Hey, registry, are there any services running that support credit card payments over HTTP using application/json?").  Services SHOULD send a list of search values for one or more fields (see the list below) and the registry SHOULD return one or more service records that match the criteria. The returned list MUST include the <code>serviceURL</code> of services that match the search cirteria and MAY include additional fields. Registries are free to decide the manner in which the search is fulfilled, the order of the service, list, etc. Services can then use the returned <code>serviceURL</code> to initiate interactions with the target service directly.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong><code>bind</code></strong>
+</dt>
+<dd>
+<p>
+The <code>bind</code> action is used by a <em>service</em> to inform the registry that the service intends to "use" that service in subsequent interactions. The service MUST pass the <code>registryID</code> of the target service to be "used." This is an OPTIONAL action and MAY NOT be supported by the registry. If it is supported, the registry MUST return <code>200 OK</code> upons a successful completion of the request. The registry MAY return more information but it MAY be ignored by the service.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong><code>health</code></strong>
+</dt>
+<dd>
+<p>
+The <code>health</code> action is used by the <em>registry</em> to check on the health of a registered service. The registry MUST use the <code>healthURL</code> provided by the <em>service</em> when that service completed the <code>register</code> action. The registry SHOULD honor the <code>healthTTL</code> value (in msec) provided by the _service at registration, too. Upon recieving a request from the registry, the service SHOULD return a list of status values and key information about the health of the running service. This is an OPTIONAL element. Registries MAY NOT make health checks and services MAY NOT respond to health requests from the registry.
+</p>
+<div class="paragraph"><p><strong>NOTE</strong>: Registries are responsible for determining when to &#8216;evict&#8217; a service entry from their listings if/when the service is no longer sending <code>renew</code> requests or responding to registry <code>health</code> requests. To maintain their entry in the registry, services SHOULD support either <code>renew</code> or <code>health</code> or possibly both.</p></div>
+</dd>
+</dl></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>For a full description of the DISCO Registry service interface, see the ALPS (Application-Level Profile Semantics) document in the <a href="https://github.com/rwmbook/registry">DISCO Registry</a> repo.</p></div>
+</td>
+</tr></table>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_references">References</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>(tk)</p></div>
 </div>
 </div>
 </div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-03 14:15:17 EST
+Last updated 2018-03-03 18:55:07 EST
 </div>
 </div>
 </body>
