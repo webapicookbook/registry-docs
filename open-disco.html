@@ -769,7 +769,7 @@ Last Updated
 </dt>
 <dd>
 <p>
-  2018-03-03
+  2018-03-10
 </p>
 </dd>
 </dl></div>
@@ -1037,7 +1037,7 @@ The <code>find</code> action is used by a <em>service</em> to query the registry
 </dt>
 <dd>
 <p>
-The <code>bind</code> action is used by a <em>service</em> to inform the registry that the service intends to "use" that service in subsequent interactions. The service MUST pass the <code>registryID</code> of the target service to be "used." This is an OPTIONAL action and MAY NOT be supported by the registry. If it is supported, the registry MUST return <code>200 OK</code> upons a successful completion of the request. The registry MAY return more information but it MAY be ignored by the service.
+The <code>bind</code> action is used by a <em>service</em> to inform the registry that the service intends to "use" that service in subsequent interactions. The service MUST pass the <code>registryID</code> of the source service (the one "asking" for a connection) and MUST pass the <code>registryID</code> of the target service to be "used." This is an OPTIONAL action and MAY NOT be supported by the registry. If it is supported, the registry MUST return <code>200 OK</code> upon a successful completion of the request. the registry SHOULD also return a <code>bindToken</code> value. This value MAY be used in subsequent interactions between the source and target services. The registry MAY return more information but it MAY be ignored by the service.
 </p>
 </dd>
 <dt class="hdlist1">
@@ -1063,11 +1063,71 @@ The <code>health</code> action is used by the <em>registry</em> to check on the 
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_registry_bind_tokens">Registry Bind Tokens</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When a service uses the registry to locate ("find") other services to use, that registry MAY offer a "bind" action. This action is meant to represent the intent source service (requestor) to use the target service in some future interactions. The result of this bind action MAY be a <code>bindToken</code>&#8201;&#8212;&#8201;a value that contains metadata about both the services and the registry involved in making the connection between the two services. The target service MAY ask the requestor service supply the registry&#8217;s <code>bindToken</code> as a way to validate or in some other way track service use and registry interactions.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph"><p>The format of the <code>bindToken</code> is designed to allow for customizable extensions. This specification only deines two elements of the <code>bindToken</code>: <code>type</code> and <code>token</code>. This specification only defines one token type: <code>simple</code>. Registries or other service groups MAY define their own token types in the future and they should document then sufficiently.</p></div>
+</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_the_simple_bind_token">The Simple Bind Token</h3>
+<div class="paragraph"><p>The <code>simple</code> bind token contains the following information:</p></div>
+<div class="paragraph"><p><code>bindToken = simple:&lt;base64-body&gt;</code></p></div>
+<div class="paragraph"><p><code>&lt;base64-body&gt; = registryKey:sourceRegistryID:targetRegistryID:utc-date-time</code></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>registryKey</code> is the unique ID of the registry that brokered the bind.
+</p>
+</li>
+<li>
+<p>
+<code>sourceRegistryID</code> is the unqiue ID of the source service (the &#8216;requestor&#8217;)
+</p>
+</li>
+<li>
+<p>
+<code>targetRegistryID</code> is the unique ID of the target service (the one to be &#8216;used&#8217;)
+</p>
+</li>
+<li>
+<p>
+<code>uts-date-time</code> is the UTC-formatted date-time the binding token was created.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Here&#8217;s an example <code>bindToken</code>:</p></div>
+<div class="listingblock">
+<div class="title">Simple Bind Token</div>
+<div class="content">
+<pre><code>Start with the following values:
+ - "registryKey":"ecc01cda-689a-4237-9590-9be7d45bd5ad",
+ - "sourceRegID":"22i52uadfbr",
+ - "targetRegID":"2qfe1yzbnms",
+ - "dateCreated":"Sun, 11 Mar 2018 02:08:20 GMT"
+
+Create a token string:
+  ecc01cda-689a-4237-9590-9be7d45bd5ad:22i52uadfbr:2qfe1yzbnms:Sun, 11 Mar 2018 02:08:20 GMT
+
+Convert the token string to base64 and prefix with the bindToken type of 'simple'
+  simple:ZWNjM...gR01U</code></pre>
+</div></div>
+</div>
+</div>
+</div>
 </div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-03 18:55:07 EST
+Last updated 2018-03-10 21:22:21 EST
 </div>
 </div>
 </body>

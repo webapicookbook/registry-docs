@@ -129,7 +129,6 @@ DISCO Registries MAY require user-level security to be accessed (e.g. via the +W
 Extensions::
 DISCO Registries are free to implement additional extensions by adding new data fields and/or actions to the list of supported elements. However, these extensions MUST NOT remove or redfine any exsiting DISCO specifications. All extensions MUST be backward and forward compatible with the published DISCO specifications. 
 
-   
 === DISCO Registry Service Actions
 The DISCO Registry Service includes the following Actions:
 
@@ -146,7 +145,7 @@ The +renew+ action is used by a _service_ to `ping' the registry -- a means of p
 The +find+ action is used by a _service_ to query the registry for a list of service that match a search criteria. This is a way for services to "ask" a registry for a pointer to one or more services that can fulfill a need for that service (e.g. "Hey, registry, are there any services running that support credit card payments over HTTP using application/json?").  Services SHOULD send a list of search values for one or more fields (see the list below) and the registry SHOULD return one or more service records that match the criteria. The returned list MUST include the +serviceURL+ of services that match the search cirteria and MAY include additional fields. Registries are free to decide the manner in which the search is fulfilled, the order of the service, list, etc. Services can then use the returned +serviceURL+ to initiate interactions with the target service directly.
  
 *+bind+*::
-The +bind+ action is used by a _service_ to inform the registry that the service intends to "use" that service in subsequent interactions. The service MUST pass the +registryID+ of the target service to be "used." This is an OPTIONAL action and MAY NOT be supported by the registry. If it is supported, the registry MUST return +200 OK+ upons a successful completion of the request. The registry MAY return more information but it MAY be ignored by the service.
+The +bind+ action is used by a _service_ to inform the registry that the service intends to "use" that service in subsequent interactions. The service MUST pass the +registryID+ of the source service (the one "asking" for a connection) and MUST pass the +registryID+ of the target service to be "used." This is an OPTIONAL action and MAY NOT be supported by the registry. If it is supported, the registry MUST return +200 OK+ upon a successful completion of the request. the registry SHOULD also return a +bindToken+ value. This value MAY be used in subsequent interactions between the source and target services. The registry MAY return more information but it MAY be ignored by the service.
 
 *+health+*::
 The +health+ action is used by the _registry_ to check on the health of a registered service. The registry MUST use the +healthURL+ provided by the _service_ when that service completed the +register+ action. The registry SHOULD honor the +healthTTL+ value (in msec) provided by the _service at registration, too. Upon recieving a request from the registry, the service SHOULD return a list of status values and key information about the health of the running service. This is an OPTIONAL element. Registries MAY NOT make health checks and services MAY NOT respond to health requests from the registry.
@@ -157,3 +156,41 @@ The +health+ action is used by the _registry_ to check on the health of a regist
 ====
 For a full description of the DISCO Registry service interface, see the ALPS (Application-Level Profile Semantics) document in the https://github.com/rwmbook/registry[DISCO Registry] repo.
 ====
+
+== Registry Bind Tokens
+When a service uses the registry to locate ("find") other services to use, that registry MAY offer a "bind" action. This action is meant to represent the intent source service (requestor) to use the target service in some future interactions. The result of this bind action MAY be a +bindToken+ -- a value that contains metadata about both the services and the registry involved in making the connection between the two services. The target service MAY ask the requestor service supply the registry's +bindToken+ as a way to validate or in some other way track service use and registry interactions.
+
+[NOTE]
+====
+The format of the +bindToken+ is designed to allow for customizable extensions. This specification only deines two elements of the +bindToken+: +type+ and +token+. This specification only defines one token type: +simple+. Registries or other service groups MAY define their own token types in the future and they should document then sufficiently.
+====
+
+=== The Simple Bind Token
+The +simple+ bind token contains the following information:
+
++bindToken = simple:<base64-body>+
+
++<base64-body> = registryKey:sourceRegistryID:targetRegistryID:utc-date-time+
+
+ * +registryKey+ is the unique ID of the registry that brokered the bind.
+ * +sourceRegistryID+ is the unqiue ID of the source service (the `requestor')
+ * +targetRegistryID+ is the unique ID of the target service (the one to be `used')
+ * +uts-date-time+ is the UTC-formatted date-time the binding token was created.
+
+Here's an example +bindToken+:
+
+.Simple Bind Token
+----
+Start with the following values:
+ - "registryKey":"ecc01cda-689a-4237-9590-9be7d45bd5ad",
+ - "sourceRegID":"22i52uadfbr",
+ - "targetRegID":"2qfe1yzbnms",
+ - "dateCreated":"Sun, 11 Mar 2018 02:08:20 GMT"
+
+Create a token string:
+  ecc01cda-689a-4237-9590-9be7d45bd5ad:22i52uadfbr:2qfe1yzbnms:Sun, 11 Mar 2018 02:08:20 GMT
+
+Convert the token string to base64 and prefix with the bindToken type of 'simple'
+  simple:ZWNjM...gR01U
+  
+---- 
